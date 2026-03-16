@@ -160,15 +160,32 @@ namespace Draw
                 float dX = p.X - lastLocation.X;
                 float dY = p.Y - lastLocation.Y;
 
-                foreach (Shape item in Selection)
+				foreach(Shape Item in Selection)
 				{
-					Matrix translateMatrix = item.TransformMatrix.Clone();
-					translateMatrix.Translate(dX, dY, MatrixOrder.Append);
-					item.TransformMatrix = translateMatrix;
+					TranslateShape(Item, dX, dY);
 				}
+
                 lastLocation = p;
             }
 		}
+
+		public void TranslateShape(Shape item, float dX, float dY)
+		{
+			if (item is GroupShape group)
+			{
+				foreach (Shape child in group.SubShape)
+					TranslateShape(child, dX, dY);
+
+				group.CalculateBoundingBoxTransformer();
+			}
+			else
+			{
+                Matrix translateMatrix = item.TransformMatrix.Clone();
+                translateMatrix.Translate(dX, dY, MatrixOrder.Append);
+                item.TransformMatrix = translateMatrix;
+            }
+       
+        }
 
 		public void RotateAt(float angleDeg)
 		{
@@ -384,6 +401,36 @@ namespace Draw
 			Selection.Clear();
 			Selection.Add(group);
 
+        }
+
+		public void Ungroup()
+		{
+            if (Selection == null || Selection.Count == 0)
+            {
+                return;
+            }
+
+			//create list of shapes for the new selection
+			List<Shape> newSelection = new List<Shape>();
+
+			//for each item in selection 
+			foreach (Shape shape in Selection)
+			{
+                //if item is groupshape
+                //if (.Contains(shape))
+				{
+                    //rempove group from shapelist3
+
+                    ShapeList.Remove(shape);
+				}
+			}
+			//for each child in group.subshape
+			//add it in shapelist\
+			//ad it in the new selection list
+			// clear the grroups subshape
+
+			//clear the selection
+			//selection.addrange(newSelection);
         }
     }
 

@@ -61,12 +61,24 @@ namespace Draw.src.Model
             {
                 minX = Math.Min(minX, shape.Rectangle.Left);
                 minY = Math.Min(minY, shape.Rectangle.Top);
+
                 maxX = Math.Max(maxX, shape.Rectangle.Right);
                 maxY = Math.Max(maxY, shape.Rectangle.Bottom);
             }
 
             Rectangle = new RectangleF(minX, minY, maxX - minX, maxY - minY);
 
+        }
+
+        public void CalculateBoundingBoxTransformer()
+        {
+            //RectangleF bounds = null;
+            //for each item in subshape
+            // using path = shape.GetShapePath();
+            // Get the bounds of the path and store it in a RectangleF variable 'b'
+            // bounds = bounds.hasValue ? RectangleF.Union(bounds.Value, b) : b;
+
+            //Rectangle = bounds.Value;
         }
     }
 }
