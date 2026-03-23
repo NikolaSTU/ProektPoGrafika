@@ -70,9 +70,18 @@ namespace Draw
         private void RotateSpeedButton_Click(object sender, EventArgs e)
 		{
 			float rotateDeg = float.Parse(rotateTextBox.Text);
-			dialogProcessor.RotateAt(rotateDeg);
 
-			statusBar.Items[0].Text = "Последно действие: Ротиране на елемент";
+            if (dialogProcessor.Selection.Count > 0)
+            {
+                dialogProcessor.RotateAt(rotateDeg);
+            }
+            else
+            {
+                MessageBox.Show("Не сте селектирали елемент", "Грешка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+                statusBar.Items[0].Text = "Последно действие: Ротиране на елемент";
 
 			viewPort.Invalidate();
 		}
@@ -98,7 +107,7 @@ namespace Draw
 				{
 					foreach (Shape item in dialogProcessor.Selection)
 					{
-						item.FillColor = colorDialog.Color;
+                        dialogProcessor.SetFillColor(item, colorDialog.Color);
 
 					}
 					viewPort.Invalidate();
@@ -106,7 +115,78 @@ namespace Draw
 			}
 		}
 
-	
+        private void applyColorFromRGB_Click(object sender, EventArgs e)
+        {
+            int red = int.Parse(rgbRedTextBox.Text);
+            int green = int.Parse(rgbGreenTextBox.Text);
+            int blue = int.Parse(rgbBlueTextBox.Text);
+            int alpha = int.Parse(rgbAlphaTextBox.Text);
+
+            if ((red > 255 || green > 255 || blue > 255 || alpha > 255) || 
+                (red < 0 || green < 0 || blue < 0 || alpha < 0))
+            {
+                MessageBox.Show("Стойностите трябва да са [0-255]");
+                return;
+            }
+
+            if (dialogProcessor.Selection.Count == 0)
+            {
+                MessageBox.Show("Не сте селектирали примитив");
+                return;
+            }
+
+            foreach (Shape item in dialogProcessor.Selection)
+            {
+                dialogProcessor.SetFillColor(item, Color.FromArgb(alpha, red, green, blue));
+                viewPort.Invalidate();
+            }
+
+        }
+
+        private void applyNameSpeedButton_Click(object sender, EventArgs e)
+        {
+            if (dialogProcessor.Selection.Count == 0)
+            {
+                MessageBox.Show("Не сте селектирали примитив");
+                return;
+            }
+            string newName = nameTextBox.Text;
+
+            foreach (Shape item in dialogProcessor.Selection)
+                dialogProcessor.SetName(item, newName);
+
+            //update name label
+
+            UpdateNameLabel();
+
+            nameTextBox.Clear();
+            statusBar.Items[0].Text ="Последно действие: Преименуване на примитив";
+            viewPort.Invalidate();
+
+        }
+
+        private void UpdateNameLabel()
+        {
+            nameLabel.Text = "Name";
+            
+            int elementsCount = dialogProcessor.Selection.Count;
+
+            if (dialogProcessor.Selection.Count >= 1)
+                nameLabel.Text = $"Name: {dialogProcessor.Selection[elementsCount - 1].Name}";
+        }
+
+        private void rotateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RotateSpeedButton_Click(sender, e);
+        }
+
+        private void setRandomColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Random rnd = new Random();
+            foreach (Shape item in dialogProcessor.Selection)
+            dialogProcessor.SetFillColor(item, Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256)));
+            viewPort.Invalidate();
+        }
 
         /// <summary>
         /// Прихващане на координатите при натискането на бутон на мишката и проверка (в обратен ред) дали не е
@@ -154,7 +234,9 @@ namespace Draw
 					}
 				}
 
-				statusBar.Items[0].Text = "Последно действие: Селекция на примитив";
+                UpdateNameLabel();
+
+                statusBar.Items[0].Text = "Последно действие: Селекция на примитив";
                 dialogProcessor.IsDragging = selectedShape != null;
                 dialogProcessor.LastLocation = e.Location;
                 viewPort.Invalidate();
@@ -247,43 +329,40 @@ namespace Draw
         {
 
         }
-
         private void toolStripTextBox1_Click(object sender, EventArgs e)
         {
 
         }
-
         private void viewPort_Load(object sender, EventArgs e)
         {
 
         }
-
         private void sheerXTextBox_Click(object sender, EventArgs e)
         {
 
         }
-
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
 
         }
-
         private void speedMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
         }
-
         private void toolStripContainer1_ContentPanel_Load(object sender, EventArgs e)
         {
 
         }
-
         private void pickUpSpeedButton_Click(object sender, EventArgs e)
         {
 
         }
-
         private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void toolStripLabel1_Click(object sender, EventArgs e)
         {
 
         }

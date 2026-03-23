@@ -189,32 +189,95 @@ namespace Draw
 
 		public void RotateAt(float angleDeg)
 		{
-			if (Selection == null)
-				return;
-			foreach (Shape item in Selection)
+			if (Selection == null || Selection.Count == 0)
 			{
-				//get local center
-				float cx = item.Rectangle.X + item.Rectangle.Width / 2;
-				float cy = item.Rectangle.Y + item.Rectangle.Height / 2;
+				return;
+			}
 
-				PointF center = new PointF(cx, cy);
-				PointF[] pts = new PointF[] { center }; //zashtoto metoda vzima masiv
+			foreach (Shape Item in Selection)
+			{  RotateShape(Item, angleDeg); }
+			
+			
+		}
 
-				// transform the local center into global coordinates
-				item.TransformMatrix.TransformPoints(pts);
-				PointF transformedCenter = pts[0];
+		public void RotateShape(Shape item, float angleDeg)
+		{
+			if (item is GroupShape group)
+			{
 
-				Matrix rotationMatrix = item.TransformMatrix.Clone();
+                //Calculate bounding box of the group
+                //cx cy for the whole group
 
-				rotationMatrix.Translate(-transformedCenter.X, -transformedCenter.Y, MatrixOrder.Append);
-				rotationMatrix.Rotate(angleDeg, MatrixOrder.Append);
-				rotationMatrix.Translate(transformedCenter.X, transformedCenter.Y, MatrixOrder.Append);
+                //group.Rectangle.X + group.Rectangle.Width / 2
+                //group.Rectangle.Y + group.Rectangle.Height / 2
 
-				item.TransformMatrix = rotationMatrix;
+                foreach (Shape child in group.SubShape)
+					RotateShape(child, angleDeg);
+
+				group.CalculateBoundingBoxTransformer();
+			}
+			else
+			{
+                //get local center
+                float cx = item.Rectangle.X + item.Rectangle.Width / 2;
+                float cy = item.Rectangle.Y + item.Rectangle.Height / 2;
+
+                PointF center = new PointF(cx, cy);
+                PointF[] pts = new PointF[] { center }; //zashtoto metoda vzima masiv
+
+                // transform the local center into global coordinates
+                item.TransformMatrix.TransformPoints(pts);
+                PointF transformedCenter = pts[0];
+
+                Matrix rotationMatrix = item.TransformMatrix.Clone();
+
+                rotationMatrix.Translate(-transformedCenter.X, -transformedCenter.Y, MatrixOrder.Append);
+                rotationMatrix.Rotate(angleDeg, MatrixOrder.Append);
+                rotationMatrix.Translate(transformedCenter.X, transformedCenter.Y, MatrixOrder.Append);
+
+                item.TransformMatrix = rotationMatrix;
+            }
+            
+        }
+
+		public void RotateShapeRecursive(Shape item, float angleDeg, PointF center)
+		{
+			if (item is GroupShape group)
+			{
+				foreach (Shape child in group.SubShape)
+					RotateShapeRecursive(child, angleDeg, center);
+
+				group.CalculateBoundingBoxTransformer();
+			}
+			else
+			{
+				Matrix rotateMatrix = item.TransformMatrix.Clone();
+				rotateMatrix.RotateAt(angleDeg, center, MatrixOrder.Append);
+				item.TransformMatrix = rotateMatrix;
+			}
+
+
+		}
+
+        public void SetFillColor(Shape item, Color color)
+        {
+			if (item is GroupShape group)
+			{
+				foreach (Shape child in group.SubShape)
+					SetFillColor(child, color);
+			}
+			else
+			{
+				item.FillColor = color;
 			}
 		}
 
-		public void Scale(float scaleX, float scaleY)
+		public void SetName(Shape item, string name)
+		{
+			item.Name = name;
+		}
+
+        public void Scale(float scaleX, float scaleY)
 		{
 			if (Selection == null)
 				return;
@@ -325,7 +388,23 @@ namespace Draw
                     grfx.DrawRectangle(Pens.DeepPink, bl.X, bl.Y, bl.Width, bl.Height);
                     grfx.DrawRectangle(Pens.DeepPink, br.X, br.Y, br.Width, br.Height);
                 }
-			}
+
+                string shapeName = item.Name; 
+
+                using (Font font = new Font("Monocraft", 11, FontStyle.Bold))
+                using (Brush textBrush = new SolidBrush(Color.Black))
+                {
+                    SizeF textSize = grfx.MeasureString(shapeName, font);
+
+                    float textX = bounds.X + (bounds.Width - textSize.Width) / 2;
+                    float textY = bounds.Top - textSize.Height - 5;
+
+                    RectangleF bgRect = new RectangleF(textX - 2, textY - 2, textSize.Width + 4, textSize.Height + 4);
+                    grfx.FillRectangle(Brushes.White, bgRect);
+
+                    grfx.DrawString(shapeName, font, textBrush, textX, textY);
+                }
+            }
 		}
 
         public ResizeHandle HitTestResizeHandle(PointF point)
@@ -383,12 +462,14 @@ namespace Draw
                 return;
             }
             GroupShape group = new GroupShape();
+			Shape lastSelected = Selection[Selection.Count - 1];
 
             foreach (Shape shape in Selection)
             {
                 group.SubShape.Add(shape);
             }
 
+			group.Name = lastSelected.Name;
             group.CalculateBoundingBox();
 
 			foreach (Shape shape in Selection)
@@ -432,9 +513,12 @@ namespace Draw
 			//clear the selection
 			//selection.addrange(newSelection);
         }
+
+
     }
 
 	
+
     }
 
 
