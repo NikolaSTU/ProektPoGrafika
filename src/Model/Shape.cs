@@ -36,7 +36,7 @@ namespace Draw
 		/// <summary>
 		/// Обхващащ правоъгълник на елемента.
 		/// </summary>
-		private RectangleF rectangle;		
+		private RectangleF rectangle;
 		public virtual RectangleF Rectangle {
 			get { return rectangle; }
 			set { rectangle = value; }
@@ -69,7 +69,7 @@ namespace Draw
 		/// <summary>
 		/// Цвят на елемента.
 		/// </summary>
-		private Color fillColor;		
+		private Color fillColor;
 		public virtual Color FillColor {
 			get { return fillColor; }
 			set { fillColor = value; }
@@ -102,7 +102,7 @@ namespace Draw
 
 		#endregion
 		
-
+		
 		/// <summary>
 		/// Проверка дали точка point принадлежи на елемента.
 		/// </summary>
@@ -129,9 +129,24 @@ namespace Draw
 			// shape.Rectangle.Inflate(shape.BorderWidth, shape.BorderWidth);
 		}
 
-		public virtual void GetShapeCenter()
+		/// <summary>
+		/// Returns the center (in world/global coordinates) of the shape.
+		/// Default implementation uses the bounding rectangle center transformed by the shape's TransformMatrix.
+		/// </summary>
+		public virtual PointF GetShapeCenter()
 		{
+			float cx = Rectangle.X + Rectangle.Width / 2f;
+			float cy = Rectangle.Y + Rectangle.Height / 2f;
 
+			PointF[] pts = new[] { new PointF(cx, cy) };
+
+			if (TransformMatrix != null)
+			{
+				Matrix m = TransformMatrix.Clone();
+				m.TransformPoints(pts);
+			}
+
+			return pts[0];
 		}
 		
 		public virtual GraphicsPath GetShapePath()

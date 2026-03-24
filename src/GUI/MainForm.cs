@@ -58,6 +58,15 @@ namespace Draw
             viewPort.Invalidate();
         }
 
+        private void drawTriangleSpeedButton_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.AddRandomTriangle();
+
+            statusBar.Items[0].Text = "Последно действие: Рисуване на Триъгълник";
+
+            viewPort.Invalidate();
+        }
+
         private void drawElipseSpeedButton_Click(object sender, EventArgs e)
         {
             dialogProcessor.AddRandomElipse();
@@ -188,6 +197,24 @@ namespace Draw
             viewPort.Invalidate();
         }
 
+        private void groupSpeedButton_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.Group();
+            statusBar.Items[0].Text = "Последно действие: Създаване на група";
+
+            viewPort.Invalidate();
+
+        }
+
+        private void UngroupSpeedButton_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.Ungroup();
+            statusBar.Items[0].Text = "Последно действие: Премахване на група";
+            viewPort.Invalidate();
+
+
+        }
+
         /// <summary>
         /// Прихващане на координатите при натискането на бутон на мишката и проверка (в обратен ред) дали не е
         /// щракнато върху елемент. Ако е така то той се отбелязва като селектиран и започва процес на "влачене".
@@ -304,14 +331,7 @@ namespace Draw
 			}
 		}
 
-        private void groupSpeedButton_Click(object sender, EventArgs e)
-        {
-            dialogProcessor.Group();
-            statusBar.Items[0].Text = "Последно действие: Създаване на група";
 
-            viewPort.Invalidate();
-
-        }
 
         /// <summary>
         /// Прихващане на отпускането на бутона на мишката.

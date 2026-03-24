@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 
@@ -115,6 +116,19 @@ namespace Draw
 			ShapeList.Add(elipse);
 		}
 
+
+		public void AddRandomTriangle()
+		{
+			Random rnd = new Random();
+            int x = rnd.Next(100, 1000);
+            int y = rnd.Next(100, 600);
+
+			TriangleShape triangle = new TriangleShape(new Rectangle(x, y, 200, 200));
+			triangle.FillColor = Color.White;
+			triangle.StrokeColor = Color.Black;
+
+			ShapeList.Add(triangle);
+        }
 		/// <summary>
 		/// Проверява дали дадена точка е в елемента.
 		/// Обхожда в ред обратен на визуализацията с цел намиране на
@@ -218,16 +232,18 @@ namespace Draw
 			}
 			else
 			{
-                //get local center
-                float cx = item.Rectangle.X + item.Rectangle.Width / 2;
-                float cy = item.Rectangle.Y + item.Rectangle.Height / 2;
+				//get local center
+				//float cx = item.Rectangle.X + item.Rectangle.Width / 2;
+				//float cy = item.Rectangle.Y + item.Rectangle.Height / 2;
 
-                PointF center = new PointF(cx, cy);
-                PointF[] pts = new PointF[] { center }; //zashtoto metoda vzima masiv
+				//PointF center = new PointF(cx, cy);
+				//PointF[] pts = new PointF[] { center }; //zashtoto metoda vzima masiv
 
-                // transform the local center into global coordinates
-                item.TransformMatrix.TransformPoints(pts);
-                PointF transformedCenter = pts[0];
+				// transform the local center into global coordinates
+				// item.TransformMatrix.TransformPoints(pts);
+				// PointF transformedCenter = pts[0];
+
+				PointF transformedCenter = item.GetShapeCenter();
 
                 Matrix rotationMatrix = item.TransformMatrix.Clone();
 
@@ -284,19 +300,21 @@ namespace Draw
 
 			foreach (Shape item in Selection)
 			{
-				//get local center
-				float cx = item.Rectangle.X + item.Rectangle.Width / 2;
-				float cy = item.Rectangle.Y + item.Rectangle.Height / 2;
+                //get local center
+                //float cx = item.Rectangle.X + item.Rectangle.Width / 2;
+                //float cy = item.Rectangle.Y + item.Rectangle.Height / 2;
 
-				PointF center = new PointF(cx, cy);
-				PointF[] pts = new PointF[] { center };
+                //PointF center = new PointF(cx, cy);
+                //PointF[] pts = new PointF[] { center };
 
-				// transform the local center into global coordinates
-				item.TransformMatrix.TransformPoints(pts);
-				PointF transformedCenter = pts[0];
+                // transform the local center into global coordinates
+                //item.TransformMatrix.TransformPoints(pts);
+                //PointF transformedCenter = pts[0];
+
+                PointF transformedCenter = item.GetShapeCenter();
 
 
-				Matrix scaleMatrix = item.TransformMatrix.Clone();
+                Matrix scaleMatrix = item.TransformMatrix.Clone();
 				scaleMatrix.Translate(-transformedCenter.X, -transformedCenter.Y, MatrixOrder.Append);
 				scaleMatrix.Scale(scaleX, scaleY, MatrixOrder.Append);
 				scaleMatrix.Translate(transformedCenter.X, transformedCenter.Y, MatrixOrder.Append);
@@ -328,14 +346,17 @@ namespace Draw
 
 			foreach (Shape item in Selection)
 			{
-                float cx = item.Rectangle.X + item.Rectangle.Width / 2;
-                float cy = item.Rectangle.Y + item.Rectangle.Height / 2;
+                //float cx = item.Rectangle.X + item.Rectangle.Width / 2;
+                // float cy = item.Rectangle.Y + item.Rectangle.Height / 2;
 
-                PointF center = new PointF(cx, cy);
-                PointF[] pts = new PointF[] { center };
+                //PointF center = new PointF(cx, cy);
+                //PointF[] pts = new PointF[] { center };
 
-                item.TransformMatrix.TransformPoints(pts);
-                PointF transformedCenter = pts[0];
+                //item.TransformMatrix.TransformPoints(pts);
+                //PointF transformedCenter = pts[0];
+
+                PointF transformedCenter = item.GetShapeCenter();
+
 
                 Matrix sheerMatrix = item.TransformMatrix.Clone();
                 sheerMatrix.Translate(-transformedCenter.X, -transformedCenter.Y, MatrixOrder.Append);
@@ -387,6 +408,20 @@ namespace Draw
                     grfx.DrawRectangle(Pens.DeepPink, tr.X, tr.Y, tr.Width, tr.Height);
                     grfx.DrawRectangle(Pens.DeepPink, bl.X, bl.Y, bl.Width, bl.Height);
                     grfx.DrawRectangle(Pens.DeepPink, br.X, br.Y, br.Width, br.Height);
+
+
+                }
+
+				using (Pen pen = new Pen(Color.DeepPink))
+				{
+					PointF transformedCenter = item.GetShapeCenter();
+					const float centerSize = 10f;
+                    RectangleF centerRect = new RectangleF(transformedCenter.X - centerSize / 2, transformedCenter.Y - centerSize / 2, centerSize, centerSize);
+
+                    grfx.FillEllipse(Brushes.White, centerRect);
+                    grfx.DrawEllipse(Pens.DeepPink, centerRect);
+
+
                 }
 
                 string shapeName = item.Name; 
@@ -455,70 +490,70 @@ namespace Draw
             }
         }
 
-        public void Group()
-        {
-            if (Selection == null || Selection.Count < 2)
-            {
-                return;
-            }
-            GroupShape group = new GroupShape();
-			Shape lastSelected = Selection[Selection.Count - 1];
+        public void Group() 
+		{ 
+			if (Selection == null || Selection.Count < 2) 
+			{ 
+				return; 
+			} 
 
-            foreach (Shape shape in Selection)
-            {
-                group.SubShape.Add(shape);
-            }
+			GroupShape group = new GroupShape();
+			Shape lastSelected = Selection[Selection.Count - 1];
+			foreach (Shape shape in Selection) 
+			{ 
+				group.SubShape.Add(shape); 
+			} 
 
 			group.Name = lastSelected.Name;
-            group.CalculateBoundingBox();
+			group.CalculateBoundingBox();
 
-			foreach (Shape shape in Selection)
+			foreach (Shape shape in Selection) 
 			{
 				ShapeList.Remove(shape);
+			} 
+
+			ShapeList.Add(group); 
+			Selection.Clear();
+			Selection.Add(group); 
+		}
+
+
+        public void Ungroup()
+		{
+			if (Selection == null || Selection.Count == 0)
+			{
+				return;
 			}
 
-			ShapeList.Add(group);
-
-			Selection.Clear();
-			Selection.Add(group);
-
-        }
-
-		public void Ungroup()
-		{
-            if (Selection == null || Selection.Count == 0)
-            {
-                return;
-            }
-
-			//create list of shapes for the new selection
 			List<Shape> newSelection = new List<Shape>();
 
-			//for each item in selection 
 			foreach (Shape shape in Selection)
 			{
-                //if item is groupshape
-                //if (.Contains(shape))
+				if (shape is GroupShape group)
 				{
-                    //rempove group from shapelist3
+					ShapeList.Remove(group);
 
-                    ShapeList.Remove(shape);
+					foreach (Shape child in group.SubShape)
+					{
+						ShapeList.Add(child);
+						newSelection.Add(child);
+					}
+
+					group.SubShape.Clear();
 				}
 			}
-			//for each child in group.subshape
-			//add it in shapelist\
-			//ad it in the new selection list
-			// clear the grroups subshape
 
-			//clear the selection
-			//selection.addrange(newSelection);
+            Selection.Clear();
         }
+
+
+    }
 
 
     }
 
 	
 
-    }
+    
 
 

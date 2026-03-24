@@ -51,12 +51,13 @@
             this.speedMenu = new System.Windows.Forms.ToolStrip();
             this.scaleYTextBox = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.nameLabel = new System.Windows.Forms.ToolStripLabel();
-            this.nameTextBox = new System.Windows.Forms.ToolStripTextBox();
             this.applyNameSpeedButton = new System.Windows.Forms.ToolStripButton();
+            this.nameTextBox = new System.Windows.Forms.ToolStripTextBox();
+            this.nameLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.pickUpSpeedButton = new System.Windows.Forms.ToolStripButton();
             this.groupSpeedButton = new System.Windows.Forms.ToolStripButton();
+            this.UngroupSpeedButton = new System.Windows.Forms.ToolStripButton();
             this.drawRectangleSpeedButton = new System.Windows.Forms.ToolStripButton();
             this.drawElipseSpeedButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
@@ -69,6 +70,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ColorPalleteSpeedButton = new System.Windows.Forms.ToolStripButton();
             this.viewPort = new Draw.DoubleBufferedPanel();
+            this.drawTriangleSpeedButton = new System.Windows.Forms.ToolStripButton();
             this.mainMenu.SuspendLayout();
             this.statusBar.SuspendLayout();
             this.speedMenu.SuspendLayout();
@@ -98,7 +100,7 @@
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Font = new System.Drawing.Font("Monocraft", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(111, 46);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(111, 50);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // exitToolStripMenuItem
@@ -116,7 +118,7 @@
             this.editToolStripMenuItem.Font = new System.Drawing.Font("Monocraft", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.C)));
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(111, 46);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(111, 50);
             this.editToolStripMenuItem.Text = "Edit";
             // 
             // rotateToolStripMenuItem
@@ -139,7 +141,7 @@
             // 
             this.imageToolStripMenuItem.Font = new System.Drawing.Font("Monocraft", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.imageToolStripMenuItem.Name = "imageToolStripMenuItem";
-            this.imageToolStripMenuItem.Size = new System.Drawing.Size(129, 46);
+            this.imageToolStripMenuItem.Size = new System.Drawing.Size(129, 50);
             this.imageToolStripMenuItem.Text = "Image";
             // 
             // helpToolStripMenuItem
@@ -148,7 +150,7 @@
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Font = new System.Drawing.Font("Monocraft", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(111, 46);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(111, 50);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // aboutToolStripMenuItem
@@ -233,9 +235,9 @@
             this.scaleXTextBox,
             this.scaleYTextBox,
             this.toolStripSeparator5,
-            this.nameLabel,
+            this.applyNameSpeedButton,
             this.nameTextBox,
-            this.applyNameSpeedButton});
+            this.nameLabel});
             this.speedMenu.Location = new System.Drawing.Point(334, 54);
             this.speedMenu.Name = "speedMenu";
             this.speedMenu.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
@@ -256,22 +258,9 @@
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 56);
             // 
-            // nameLabel
-            // 
-            this.nameLabel.Font = new System.Drawing.Font("Monocraft", 10F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nameLabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(118, 50);
-            this.nameLabel.Text = "Name:";
-            // 
-            // nameTextBox
-            // 
-            this.nameTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.nameTextBox.Name = "nameTextBox";
-            this.nameTextBox.Size = new System.Drawing.Size(100, 56);
-            // 
             // applyNameSpeedButton
             // 
+            this.applyNameSpeedButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.applyNameSpeedButton.BackColor = System.Drawing.Color.LightCoral;
             this.applyNameSpeedButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.applyNameSpeedButton.Font = new System.Drawing.Font("Monocraft", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -282,6 +271,23 @@
             this.applyNameSpeedButton.Text = "Apply Name";
             this.applyNameSpeedButton.Click += new System.EventHandler(this.applyNameSpeedButton_Click);
             // 
+            // nameTextBox
+            // 
+            this.nameTextBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.nameTextBox.Font = new System.Drawing.Font("Monocraft", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nameTextBox.Name = "nameTextBox";
+            this.nameTextBox.Size = new System.Drawing.Size(100, 56);
+            this.nameTextBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // nameLabel
+            // 
+            this.nameLabel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.nameLabel.Font = new System.Drawing.Font("Monocraft", 10F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nameLabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.nameLabel.Name = "nameLabel";
+            this.nameLabel.Size = new System.Drawing.Size(118, 50);
+            this.nameLabel.Text = "Name:";
+            // 
             // toolStrip1
             // 
             this.toolStrip1.BackColor = System.Drawing.Color.MistyRose;
@@ -290,8 +296,10 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pickUpSpeedButton,
             this.groupSpeedButton,
+            this.UngroupSpeedButton,
             this.drawRectangleSpeedButton,
-            this.drawElipseSpeedButton});
+            this.drawElipseSpeedButton,
+            this.drawTriangleSpeedButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 54);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -324,6 +332,18 @@
             this.groupSpeedButton.Text = "Group";
             this.groupSpeedButton.Click += new System.EventHandler(this.groupSpeedButton_Click);
             // 
+            // UngroupSpeedButton
+            // 
+            this.UngroupSpeedButton.BackColor = System.Drawing.Color.LightCoral;
+            this.UngroupSpeedButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.UngroupSpeedButton.Font = new System.Drawing.Font("Monocraft", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UngroupSpeedButton.Image = ((System.Drawing.Image)(resources.GetObject("UngroupSpeedButton.Image")));
+            this.UngroupSpeedButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.UngroupSpeedButton.Name = "UngroupSpeedButton";
+            this.UngroupSpeedButton.Size = new System.Drawing.Size(329, 50);
+            this.UngroupSpeedButton.Text = "Ungroup";
+            this.UngroupSpeedButton.Click += new System.EventHandler(this.UngroupSpeedButton_Click);
+            // 
             // drawRectangleSpeedButton
             // 
             this.drawRectangleSpeedButton.BackColor = System.Drawing.Color.LightCoral;
@@ -340,6 +360,7 @@
             this.drawElipseSpeedButton.BackColor = System.Drawing.Color.LightCoral;
             this.drawElipseSpeedButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.drawElipseSpeedButton.Font = new System.Drawing.Font("Monocraft", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.drawElipseSpeedButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.drawElipseSpeedButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.drawElipseSpeedButton.Name = "drawElipseSpeedButton";
             this.drawElipseSpeedButton.Size = new System.Drawing.Size(329, 50);
@@ -449,6 +470,16 @@
             this.viewPort.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ViewPortMouseMove);
             this.viewPort.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ViewPortMouseUp);
             // 
+            // drawTriangleSpeedButton
+            // 
+            this.drawTriangleSpeedButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.drawTriangleSpeedButton.Image = ((System.Drawing.Image)(resources.GetObject("drawTriangleSpeedButton.Image")));
+            this.drawTriangleSpeedButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.drawTriangleSpeedButton.Name = "drawTriangleSpeedButton";
+            this.drawTriangleSpeedButton.Size = new System.Drawing.Size(329, 41);
+            this.drawTriangleSpeedButton.Text = "Draw Triangle";
+            this.drawTriangleSpeedButton.Click += new System.EventHandler(this.drawTriangleSpeedButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
@@ -523,5 +554,7 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton ColorPalleteSpeedButton;
+        private System.Windows.Forms.ToolStripButton UngroupSpeedButton;
+        private System.Windows.Forms.ToolStripButton drawTriangleSpeedButton;
     }
 }

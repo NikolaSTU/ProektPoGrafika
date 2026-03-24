@@ -61,5 +61,21 @@ namespace Draw.src.Model
 
             grfx.Restore(state);
         }
+
+        public override PointF GetShapeCenter()
+        {
+            // center of bounding rectangle in local coordinates
+            float cx = Rectangle.X + Rectangle.Width / 2f;
+            float cy = Rectangle.Y + Rectangle.Height / 2f;
+
+            PointF[] pts = new PointF[] { new PointF(cx, cy) };
+            if (TransformMatrix != null)
+            {
+                Matrix m = TransformMatrix.Clone();
+                m.TransformPoints(pts);
+            }
+
+            return pts[0];
+        }
     }
 }

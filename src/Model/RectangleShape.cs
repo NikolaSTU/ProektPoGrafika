@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace Draw
 {
@@ -30,7 +31,7 @@ namespace Draw
 		public override bool Contains(PointF point)
 		{
 			if (base.Contains(point))
-				// Проверка дали е в обекта само, ако точката е в обхващащия правоъгълник.
+				// Проверка дали е в обхващащия правоъгълник само, ако точката е в обхващащия правоъгълник.
 				// В случая на правоъгълник - директно връщаме true
 				return true;
 			else
@@ -54,5 +55,21 @@ namespace Draw
             grfx.Restore(state);
 
         }
+
+        public override System.Drawing.PointF GetShapeCenter()
+        {
+            // bounding rect center in local coords
+            float cx = Rectangle.X + Rectangle.Width / 2f;
+            float cy = Rectangle.Y + Rectangle.Height / 2f;
+
+            PointF[] pts = new PointF[] { new PointF(cx, cy) };
+            if (TransformMatrix != null)
+            {
+                Matrix m = TransformMatrix.Clone();
+                m.TransformPoints(pts);
+            }
+
+            return pts[0];
+        } 
     }
 }
