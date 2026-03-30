@@ -125,6 +125,56 @@ namespace Draw
 			}
 		}
 
+        private void StrokeColorToolStripButton_Click(object sender, EventArgs e)
+        {
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (dialogProcessor.Selection != null)
+                {
+                    foreach (Shape item in dialogProcessor.Selection)
+                    {
+                        dialogProcessor.SetStrokeColor(item, colorDialog.Color);
+
+                    }
+                    viewPort.Invalidate();
+                }
+            }
+        }
+
+        private void minusStrokeWidthToolStripButton_Click(object sender, EventArgs e)
+        {
+            if (dialogProcessor.Selection.Count == 0)
+            {
+                MessageBox.Show("Не сте селектирали примитив");
+                return;
+            }
+            else
+            {
+                foreach (Shape item in dialogProcessor.Selection)
+                    dialogProcessor.SetStrokeWidth(item, --item.StrokeWidth);
+            }
+
+            statusBar.Items[0].Text = "Последно действие: Намаляне на дебелина на Stroke";
+            viewPort.Invalidate();
+        }
+
+        private void plusStrokeWidthToolStripButton_Click(object sender, EventArgs e)
+        {
+            if (dialogProcessor.Selection.Count == 0)
+            {
+                MessageBox.Show("Не сте селектирали примитив");
+                return;
+            }
+            else
+            {
+                foreach (Shape item in dialogProcessor.Selection)
+                    dialogProcessor.SetStrokeWidth(item, ++item.StrokeWidth);
+            }
+
+            statusBar.Items[0].Text = "Последно действие: Увеличаване на дебелина на Stroke";
+            viewPort.Invalidate();
+        }
+
         private void applyColorFromRGB_Click(object sender, EventArgs e)
         {
             int red = int.Parse(rgbRedTextBox.Text);
@@ -287,6 +337,24 @@ namespace Draw
 
         }
 
+        private void ClearToolStripButton_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.Clear();
+            viewPort.Invalidate();
+        }
+
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.SelectAll();
+            viewPort.Invalidate();
+        }
+
+        private void deselectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.DeselectAll();
+            viewPort.Invalidate();
+        }
+
         private void openModelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -311,6 +379,8 @@ namespace Draw
                 statusBar.Items[0].Text = "Последно действие: Запис на модел";
             }
         }
+
+
 
         /// <summary>
         /// Прихващане на координатите при натискането на бутон на мишката и проверка (в обратен ред) дали не е
@@ -495,6 +565,21 @@ namespace Draw
         }
 
         private void saveFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
+
+        private void imageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripComboBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pickUpSpeedButton_Click_1(object sender, EventArgs e)
         {
 
         }

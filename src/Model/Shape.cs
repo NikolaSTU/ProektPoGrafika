@@ -88,6 +88,14 @@ namespace Draw
 		}
 
 		//stroke width
+
+		private int strokeWidth;
+		public virtual int StrokeWidth
+		{
+			get { return strokeWidth; }
+			set { strokeWidth = value; }
+		}
+
 		//opacity
 		[NonSerialized]
 		private Matrix transformMatrix = new Matrix();
@@ -104,6 +112,8 @@ namespace Draw
 		//to:do
 		//changem matrix to 1d
 		//look up json serializing
+
+
 		[OnSerializing]
 		internal void OnSerializingMethod(StreamingContext context)
 		{

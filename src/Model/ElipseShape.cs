@@ -59,7 +59,7 @@ namespace Draw.src.Model
             Color strokeColor = Color.FromArgb(100, StrokeColor);
 
             grfx.FillEllipse(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
-            grfx.DrawEllipse(new Pen(new SolidBrush(StrokeColor), 2), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
+            grfx.DrawEllipse(new Pen(new SolidBrush(StrokeColor), StrokeWidth), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
 
             grfx.Restore(state);
         }

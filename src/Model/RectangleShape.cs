@@ -53,7 +53,7 @@ namespace Draw
 
             grfx.Transform = TransformMatrix;
             grfx.FillRectangle(new SolidBrush(FillColor),Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
-            grfx.DrawRectangle(new Pen(new SolidBrush(StrokeColor), 2), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
+            grfx.DrawRectangle(new Pen(new SolidBrush(StrokeColor), StrokeWidth), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
 
             grfx.Restore(state);
 

@@ -281,6 +281,32 @@ namespace Draw
 			}
 		}
 
+		public void SetStrokeColor(Shape item, Color color)
+		{
+            if (item is GroupShape group)
+            {
+                foreach (Shape child in group.SubShape)
+                    SetStrokeColor(child, color);
+            }
+            else
+            {
+                item.StrokeColor = color;
+            }
+        }
+
+		public void SetStrokeWidth(Shape item, int width)
+		{
+            if (item is GroupShape group)
+            {
+                foreach (Shape child in group.SubShape)
+                    SetStrokeWidth(child, width);
+            }
+            else
+            {
+                item.StrokeWidth = width;
+            }
+        }
+
 		public void SetName(Shape item, string name)
 		{
 			item.Name = name;
@@ -542,6 +568,23 @@ namespace Draw
             }
         }
 
+		public void Clear()
+		{
+			ShapeList.Clear();
+		}
+
+		public void SelectAll()
+		{
+			foreach (Shape shape in ShapeList)
+			{
+				Selection.Add(shape);
+			}
+		}
+
+		public void DeselectAll()
+		{
+			Selection.Clear();
+		}
     }
 
 

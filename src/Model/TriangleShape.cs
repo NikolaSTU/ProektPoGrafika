@@ -62,7 +62,7 @@ namespace Draw.src.Model
             PointF[] points = { point1, point2, point3 };
 
             using (SolidBrush brush = new SolidBrush(FillColor))
-            using (Pen pen = new Pen(StrokeColor, 2))
+            using (Pen pen = new Pen(StrokeColor, StrokeWidth))
             {
                 grfx.FillPolygon(brush, points);
                 grfx.DrawPolygon(pen, points);
