@@ -4,9 +4,12 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing.Drawing2D;
 
 namespace Draw.src.Model
 {
+    [Serializable]
+
     internal class GroupShape : Shape
     {
         public GroupShape() : base() { }
@@ -72,13 +75,25 @@ namespace Draw.src.Model
 
         public void CalculateBoundingBoxTransformer()
         {
-            //RectangleF bounds = null;
-            //for each item in subshape
-            // using path = shape.GetShapePath();
-            // Get the bounds of the path and store it in a RectangleF variable 'b'
-            // bounds = bounds.hasValue ? RectangleF.Union(bounds.Value, b) : b;
+            if (SubShape == null || SubShape.Count == 0)
+                return;
 
-            //Rectangle = bounds.Value;
+            RectangleF? bounds = null;
+
+            foreach (Shape shape in SubShape)
+            {
+                using (GraphicsPath path = shape.GetShapePath())
+                {
+                    RectangleF b = path.GetBounds();
+                    if (bounds == null)
+                        bounds = b;
+                    else
+                        bounds = RectangleF.Union(bounds.Value, b);
+                }
+            }
+
+            if (bounds.HasValue)
+                Rectangle = bounds.Value;
         }
     }
 }

@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace Draw.src.Model
 {
+    [Serializable]
+
     public class TriangleShape : Shape    
     {
         public TriangleShape(RectangleF rect) : base(rect) 

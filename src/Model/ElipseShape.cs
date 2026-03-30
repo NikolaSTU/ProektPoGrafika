@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Draw.src.Model
 {
+    [Serializable]
+
     public class ElipseShape : Shape
     {
         public ElipseShape(RectangleF rect) : base(rect) 

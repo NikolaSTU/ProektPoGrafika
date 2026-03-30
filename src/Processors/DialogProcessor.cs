@@ -232,16 +232,7 @@ namespace Draw
 			}
 			else
 			{
-				//get local center
-				//float cx = item.Rectangle.X + item.Rectangle.Width / 2;
-				//float cy = item.Rectangle.Y + item.Rectangle.Height / 2;
 
-				//PointF center = new PointF(cx, cy);
-				//PointF[] pts = new PointF[] { center }; //zashtoto metoda vzima masiv
-
-				// transform the local center into global coordinates
-				// item.TransformMatrix.TransformPoints(pts);
-				// PointF transformedCenter = pts[0];
 
 				PointF transformedCenter = item.GetShapeCenter();
 
@@ -300,18 +291,9 @@ namespace Draw
 
 			foreach (Shape item in Selection)
 			{
-                //get local center
-                //float cx = item.Rectangle.X + item.Rectangle.Width / 2;
-                //float cy = item.Rectangle.Y + item.Rectangle.Height / 2;
-
-                //PointF center = new PointF(cx, cy);
-                //PointF[] pts = new PointF[] { center };
-
-                // transform the local center into global coordinates
-                //item.TransformMatrix.TransformPoints(pts);
-                //PointF transformedCenter = pts[0];
 
                 PointF transformedCenter = item.GetShapeCenter();
+
 
 
                 Matrix scaleMatrix = item.TransformMatrix.Clone();
@@ -346,14 +328,6 @@ namespace Draw
 
 			foreach (Shape item in Selection)
 			{
-                //float cx = item.Rectangle.X + item.Rectangle.Width / 2;
-                // float cy = item.Rectangle.Y + item.Rectangle.Height / 2;
-
-                //PointF center = new PointF(cx, cy);
-                //PointF[] pts = new PointF[] { center };
-
-                //item.TransformMatrix.TransformPoints(pts);
-                //PointF transformedCenter = pts[0];
 
                 PointF transformedCenter = item.GetShapeCenter();
 
@@ -546,6 +520,15 @@ namespace Draw
             Selection.Clear();
         }
 
+		public void SaveModel(string path)
+		{
+
+		}
+
+		public void LoadModel(string path) 
+		{
+
+		}
 
     }
 

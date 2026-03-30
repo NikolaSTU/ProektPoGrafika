@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Runtime.Serialization;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Draw
 {
 	/// <summary>
 	/// Базовия клас на примитивите, който съдържа общите характеристики на примитивите.
 	/// </summary>
+	/// 
+	[Serializable]
 	public abstract class Shape
 	{
 		#region Constructors
@@ -85,12 +89,55 @@ namespace Draw
 
 		//stroke width
 		//opacity
-
+		[NonSerialized]
 		private Matrix transformMatrix = new Matrix();
 		public virtual Matrix TransformMatrix
 		{
 			get { return transformMatrix; }
 			set { transformMatrix = value; }
+		}
+
+		//event that happens before serialization
+		//we get the values from the transform matrix
+		//and se them to the matrix data 2d array
+		[OnSerializing]
+		internal void OnSerializingMethod(StreamingContext context)
+		{
+			int index = 0;
+			var elements = TransformMatrix.Elements;
+
+				for (int i = 0; i <= 2; i++)
+				{
+					for(int j = 0; j <=1; j++)
+					{
+						MatrixData[i, j] = elements[index++];
+					}
+				}
+		}
+
+		//event that happens after deserialization
+		[OnDeserialized]
+		internal void OnDeserializingMethod(StreamingContext context)
+		{
+			float m11 = MatrixData[0, 0];
+			float m12 = MatrixData[0, 1];
+			float m21 = MatrixData[1, 0];
+			float m22 = MatrixData[1, 1];
+			float dx = MatrixData[2, 0];
+			float dy = MatrixData[2, 1];
+
+			//create new matrix and pass the six parameters
+			//Public Matrix(float m11, float m12, float m21, float m22, float dx, float dy)
+			//set the transform matrix to be the new matrix
+		}
+
+		// we use matrix data 2d array to store the parameters
+		// from the transform matrix
+		private float[,] matrixData = new float[3, 2];
+		public virtual float[,] MatrixData
+		{
+			get { return matrixData; }
+			set { matrixData = value; }
 		}
 
 		private string name;

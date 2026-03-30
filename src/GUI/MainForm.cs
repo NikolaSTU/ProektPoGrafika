@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using static Draw.DialogProcessor;
 
@@ -183,6 +184,79 @@ namespace Draw
             if (dialogProcessor.Selection.Count >= 1)
                 nameLabel.Text = $"Name: {dialogProcessor.Selection[elementsCount - 1].Name}";
         }
+
+        private void addXSheer_Click(object sender, EventArgs e)
+        {
+            if (dialogProcessor.Selection.Count == 0)
+            {
+                MessageBox.Show("Не сте селектирали примитив");
+                return;
+            }
+            else {
+                foreach (Shape item in dialogProcessor.Selection)
+                    dialogProcessor.Sheer(-0.2f, 0f);        
+                
+                }
+
+            statusBar.Items[0].Text = "Последно действие: Sheer на елемент";
+            viewPort.Invalidate();
+        }
+
+        private void removeXSheer_Click(object sender, EventArgs e)
+        {
+            if (dialogProcessor.Selection.Count == 0)
+            {
+                MessageBox.Show("Не сте селектирали примитив");
+                return;
+            }
+            else
+            {
+                foreach (Shape item in dialogProcessor.Selection)
+                    dialogProcessor.Sheer(0.2f, 0f);
+
+            }
+
+            statusBar.Items[0].Text = "Последно действие: Sheer на елемент";
+            viewPort.Invalidate();
+        }
+
+        private void removeYSheer_Click(object sender, EventArgs e)
+        {
+            if (dialogProcessor.Selection.Count == 0)
+            {
+                MessageBox.Show("Не сте селектирали примитив");
+                return;
+            }
+            else
+            {
+                foreach (Shape item in dialogProcessor.Selection)
+                    dialogProcessor.Sheer(0f, 0.2f);
+
+            }
+
+            statusBar.Items[0].Text = "Последно действие: Sheer на елемент";
+            viewPort.Invalidate();
+        }
+
+        private void addYSheer_Click(object sender, EventArgs e)
+        {
+            if (dialogProcessor.Selection.Count == 0)
+            {
+                MessageBox.Show("Не сте селектирали примитив");
+                return;
+            }
+            else
+            {
+                foreach (Shape item in dialogProcessor.Selection)
+                    dialogProcessor.Sheer(0f, -0.2f);
+
+            }
+
+            statusBar.Items[0].Text = "Последно действие: Sheer на елемент";
+            viewPort.Invalidate();
+        }
+
+       
 
         private void rotateToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -387,6 +461,20 @@ namespace Draw
 
         }
 
+        private void toolStripLabel1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripLabel3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void saveFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
 
     }
 }
