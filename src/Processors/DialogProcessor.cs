@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 
@@ -522,13 +524,23 @@ namespace Draw
 
 		public void SaveModel(string path)
 		{
-
+			using (FileStream fs = new FileStream(path, FileMode.Create))
+			{
+				BinaryFormatter bf = new BinaryFormatter();
+				bf.Serialize(fs, ShapeList);
+			}
 		}
 
 		public void LoadModel(string path) 
 		{
-
-		}
+			using (FileStream fs = new FileStream(path, FileMode.Open))
+			{
+				
+				BinaryFormatter bf = new BinaryFormatter();
+                ShapeList = (List<Shape>)bf.Deserialize(fs);
+				    
+            }
+        }
 
     }
 

@@ -100,6 +100,10 @@ namespace Draw
 		//event that happens before serialization
 		//we get the values from the transform matrix
 		//and se them to the matrix data 2d array
+
+		//to:do
+		//changem matrix to 1d
+		//look up json serializing
 		[OnSerializing]
 		internal void OnSerializingMethod(StreamingContext context)
 		{
@@ -126,9 +130,8 @@ namespace Draw
 			float dx = MatrixData[2, 0];
 			float dy = MatrixData[2, 1];
 
-			//create new matrix and pass the six parameters
-			//Public Matrix(float m11, float m12, float m21, float m22, float dx, float dy)
-			//set the transform matrix to be the new matrix
+			Matrix deserializedMatrix = new Matrix(m11, m12, m21, m22, dx, dy);
+			transformMatrix = deserializedMatrix;
 		}
 
 		// we use matrix data 2d array to store the parameters

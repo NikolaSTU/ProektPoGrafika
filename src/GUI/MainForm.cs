@@ -256,8 +256,6 @@ namespace Draw
             viewPort.Invalidate();
         }
 
-       
-
         private void rotateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RotateSpeedButton_Click(sender, e);
@@ -287,6 +285,31 @@ namespace Draw
             viewPort.Invalidate();
 
 
+        }
+
+        private void openModelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Draw Model (*.draw)|*.draw";
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                dialogProcessor.LoadModel(ofd.FileName);
+                viewPort.Invalidate();
+                statusBar.Items[0].Text = "Последно действие: Зареждане на модел";
+            }
+        }
+
+        private void saveModelToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Draw Model (*.draw)|*.draw";
+            
+            if(sfd.ShowDialog() == DialogResult.OK)
+            {
+                dialogProcessor.SaveModel(sfd.FileName);
+                statusBar.Items[0].Text = "Последно действие: Запис на модел";
+            }
         }
 
         /// <summary>
@@ -475,6 +498,7 @@ namespace Draw
         {
 
         }
+
 
     }
 }

@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveModelToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rotateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,11 +106,27 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openModelToolStripMenuItem,
+            this.saveModelToolStripMenuItem1,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Font = new System.Drawing.Font("Monocraft", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(111, 43);
             this.fileToolStripMenuItem.Text = "File";
+            // 
+            // openModelToolStripMenuItem
+            // 
+            this.openModelToolStripMenuItem.Name = "openModelToolStripMenuItem";
+            this.openModelToolStripMenuItem.Size = new System.Drawing.Size(403, 48);
+            this.openModelToolStripMenuItem.Text = "Open Model";
+            this.openModelToolStripMenuItem.Click += new System.EventHandler(this.openModelToolStripMenuItem_Click);
+            // 
+            // saveModelToolStripMenuItem1
+            // 
+            this.saveModelToolStripMenuItem1.Name = "saveModelToolStripMenuItem1";
+            this.saveModelToolStripMenuItem1.Size = new System.Drawing.Size(403, 48);
+            this.saveModelToolStripMenuItem1.Text = "Save Model";
+            this.saveModelToolStripMenuItem1.Click += new System.EventHandler(this.saveModelToolStripMenuItem1_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -647,5 +665,7 @@
         private System.Windows.Forms.ToolStripButton removeYSheer;
         private System.Windows.Forms.ToolStripButton addYSheer;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.ToolStripMenuItem openModelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveModelToolStripMenuItem1;
     }
 }
